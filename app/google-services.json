@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "273375371377",
+    "firebase_url": "https://smart-academic-infrastructure-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smart-academic-infrastructure",
+    "storage_bucket": "smart-academic-infrastructure.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273375371377:android:5afe6e146e68a559577bd0",
+        "android_client_info": {
+          "package_name": "app.dev.dpi_sai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpSwihYW9KBj-rUZeC_nD_acqqmRs1gjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273375371377:android:b2a6261ba9f340c7577bd0",
+        "android_client_info": {
+          "package_name": "app.dev.mahmudul.hasan.smartai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpSwihYW9KBj-rUZeC_nD_acqqmRs1gjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273375371377:android:7106fdec317fd558577bd0",
+        "android_client_info": {
+          "package_name": "app.dev.sai_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpSwihYW9KBj-rUZeC_nD_acqqmRs1gjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273375371377:android:971a165f458f962a577bd0",
+        "android_client_info": {
+          "package_name": "app.dev.saiapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpSwihYW9KBj-rUZeC_nD_acqqmRs1gjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273375371377:android:474ef54a2928a636577bd0",
+        "android_client_info": {
+          "package_name": "app.dev.smartacademicinfrastructure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpSwihYW9KBj-rUZeC_nD_acqqmRs1gjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
