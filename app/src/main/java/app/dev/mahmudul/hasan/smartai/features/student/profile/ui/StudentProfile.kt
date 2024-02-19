@@ -9,6 +9,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,10 +22,9 @@ import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.DropDownSpiner
 import app.dev.dpi_sai.component.InputField
 import app.dev.dpi_sai.component.SpacerHeight
+import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
 import app.dev.mahmudul.hasan.smartai.utils.Utils
-import app.dev.smartacademicinfrastructure.StudentDataModel
-import com.appdevmhr.dpi_sai.di.Resourse
 import com.google.firebase.auth.FirebaseAuth
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -80,6 +80,20 @@ fun StudentProfile(
         }
     }
 
+    if (studentProfileState.data != null) {
+        val student = studentProfileState.data
+        studentName.value = student.name
+        studentRollNumber.value = student.rollNumber
+        studentRegistrationNumber.value = student.registrationNumber
+        selectedSession.value = student.session
+        selectedSemester.value = student.semester
+        selectedDepartment.value = student.department
+        selectedShift.value = student.shift
+        selectedGroup.value = student.group
+    }
+    LaunchedEffect(key1 = updateStudentProfile.data) {
+            vm.getStudentProfile(firebaseAuth.currentUser!!.uid)
+    }
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -141,50 +155,20 @@ fun StudentProfile(
                 )
             }
             SpacerHeight(height = 30)
-            if (isLoding.value) {
+            ResultShowInfo(
+                visible = studentProfileState.error.isNotEmpty(),
+                data = "Error : ${studentProfileState.error}"
+            )
+            ResultShowInfo(
+                visible = updateStudentProfile.error.isNotEmpty(),
+                data = "Error : ${updateStudentProfile.error}"
+            )
+
+            if (studentProfileState.isLoading || updateStudentProfile.isLoading) {
                 CircularProgressIndicator()
             }
             SpacerHeight(height = 120)
 
-        }
-    }
-
-    when (studentProfileState) {
-        is Resourse.Failure -> {
-            isLoding.value = false
-            println("Error")
-        }
-
-        Resourse.Loading -> {
-            isLoding.value = true
-        }
-
-        is Resourse.Success -> {
-            isLoding.value = false
-            val student = (studentProfileState as Resourse.Success<StudentDataModel>).result
-            studentName.value = student.name
-            studentRollNumber.value = student.rollNumber
-            studentRegistrationNumber.value = student.registrationNumber
-            selectedSession.value = student.session
-            selectedSemester.value = student.semester
-            selectedDepartment.value = student.department
-            selectedShift.value = student.shift
-            selectedGroup.value = student.group
-        }
-    }
-
-    when (updateStudentProfile) {
-        is Resourse.Failure -> {
-            isLoding.value = false
-            println("Error")
-        }
-
-        Resourse.Loading -> {
-        }
-
-        is Resourse.Success -> {
-            isLoding.value = false
-            vm.getStudentProfile(firebaseAuth.currentUser!!.uid)
         }
     }
 

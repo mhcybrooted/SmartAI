@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,12 +32,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.SpacerHeight
 import app.dev.mahmudul.hasan.smartai.R
+import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
+import app.dev.mahmudul.hasan.smartai.component.ResultShowLoading
 import app.dev.mahmudul.hasan.smartai.features.destinations.CourseHomeDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.SignInScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentProfileDestination
 import app.dev.smartacademicinfrastructure.CourseModel
-import com.appdevmhr.dpi_sai.di.Resourse
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
@@ -50,8 +52,8 @@ fun StudentHomeScreen(
     destination: DestinationsNavigator,
     vm: StudentHomeViewModel = koinViewModel()
 ) {
-    val studentProfileState = vm.studentProfileState.collectAsState()
-    val studentCoursesState = vm.studentCoursesState.collectAsState()
+    val studentProfileState by vm.studentProfileState.collectAsState()
+    val studentCoursesState by vm.studentCoursesState.collectAsState()
 
 
 
@@ -89,56 +91,32 @@ fun StudentHomeScreen(
                     )
                 }
             })
-
-            when (studentCoursesState.value) {
-                is Resourse.Failure -> {
-                    val e = studentCoursesState.value as Resourse.Failure
-                    println("error : $e")
-                }
-
-                Resourse.Loading -> {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(text = "Loading...")
-                    }
-                }
-
-                is Resourse.Success -> {
-                    val result = studentCoursesState.value as Resourse.Success
-                    ItemList(result.result, destination)
-                }
+            ResultShowInfo(
+                visible = studentCoursesState.error.isNotEmpty(),
+                data = "Error : ${studentCoursesState.error}"
+            )
+            if (studentProfileState.isLoading || studentCoursesState.isLoading) {
+                ResultShowLoading()
             }
-
-        }
-
-    }
-    when (studentProfileState.value) {
-        is Resourse.Failure -> {
-            destination.navigate(SignInScreenDestination) {
-                popUpTo(StudentHomeScreenDestination) {
-                    inclusive = true
-                }
+            if (studentCoursesState.data != null) {
+                ItemList(studentCoursesState.data, destination)
             }
-        }
-
-        Resourse.Loading -> {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Text(text = "Loading...")
-            }
-        }
-
-        is Resourse.Success -> {
-            val result = studentProfileState.value as Resourse.Success
-            vm.getStudentCourses(result.result)
         }
     }
+
+
+
+    if (studentProfileState.data != null) {
+        vm.getStudentCourses(studentProfileState.data)
+    }
+    if (studentProfileState.error.isNotEmpty()) {
+        destination.navigate(SignInScreenDestination) {
+            popUpTo(StudentHomeScreenDestination) {
+                inclusive = true
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -148,6 +126,7 @@ fun ItemList(items: List<CourseModel>, destination: DestinationsNavigator) {
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         items(items) { item ->
             ItemRow(item, destination)
         }
@@ -212,7 +191,7 @@ fun ItemRow(item: CourseModel, destination: DestinationsNavigator) {
             SpacerHeight(height = 20)
             OutlinedButton(
                 onClick = {
-                          destination.navigate(CourseHomeDestination(item.courseCode))
+                    destination.navigate(CourseHomeDestination(item.courseCode))
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.8F),
