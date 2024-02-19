@@ -17,6 +17,7 @@ import app.dev.mahmudul.hasan.smartai.features.student.profile.data.StudentProfi
 import app.dev.mahmudul.hasan.smartai.features.student.profile.domain.StudentProfileRepository
 import app.dev.mahmudul.hasan.smartai.features.student.profile.ui.StudentProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -25,6 +26,7 @@ val AppModule = module {
     single(createdAtStart = true) { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
     single  { SignInUseCase(get())}
+    single { FirebaseDatabase.getInstance() }
     single<SignInRepository> { SignInRepositoryImpl(get(), get()) }
     viewModel {
         SignInViewModel(get(), get())
@@ -42,9 +44,9 @@ val AppModule = module {
     viewModel {
         StudentProfileViewModel(get(),get(),get())
     }
-    single<CourseHomeRepository> { CourseHomeRepositoryImpl(get()) }
+    single<CourseHomeRepository> { CourseHomeRepositoryImpl(get(),get(),get()) }
     viewModel {
-        CourseHomeViewModel(get(),get())
+        CourseHomeViewModel(get())
     }
 
 }
