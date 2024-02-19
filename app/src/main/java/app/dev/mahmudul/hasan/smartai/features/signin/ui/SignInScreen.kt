@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.dev.dpi_sai.component.InputField
 import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
+import app.dev.mahmudul.hasan.smartai.features.destinations.AdminLoginScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.SignInScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.SignUpScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
@@ -126,6 +127,11 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center,
             modifier = Modifier.clickable {
+                destination.navigate(AdminLoginScreenDestination) {
+                    popUpTo(SignInScreenDestination) {
+                        inclusive = true
+                    }
+                }
             }
         )
         Spacer(modifier = Modifier.height(20.dp))
