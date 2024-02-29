@@ -8,7 +8,9 @@ import com.appdevmhr.dpi_sai.di.Resourse
 import kotlinx.coroutines.flow.Flow
 
 interface CourseHomeRepository {
-    suspend fun getCourseData(courseID:String) : Flow<Resourse<CourseModel>>
-    suspend fun getMessages(courseID: String) : Flow<Resourse<List<MessageItemModel>>>
-    suspend fun StoreMessage(message:String, courseCode: String,) : Flow<Resourse<Boolean>>
+    suspend fun getStudentCourseData(courseID:String) : Flow<Resourse<CourseModel>>
+    suspend fun getTeacherCourseData(courseID:String) : Flow<Resourse<CourseModel>>
+    suspend fun getMessages(courseModel: CourseModel) : Flow<Resourse<List<MessageItemModel>>>
+    suspend fun StoreStudentMessage(message:String, courseModel: CourseModel,) : Flow<Resourse<Boolean>>
+    suspend fun StoreTeacherMessage(message:String, courseModel: CourseModel,) : Flow<Resourse<Boolean>>
 }

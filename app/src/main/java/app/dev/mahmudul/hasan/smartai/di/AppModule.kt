@@ -19,6 +19,9 @@ import app.dev.mahmudul.hasan.smartai.features.student.home.ui.StudentHomeViewMo
 import app.dev.mahmudul.hasan.smartai.features.student.profile.data.StudentProfileRepositoryImpl
 import app.dev.mahmudul.hasan.smartai.features.student.profile.domain.StudentProfileRepository
 import app.dev.mahmudul.hasan.smartai.features.student.profile.ui.StudentProfileViewModel
+import app.dev.mahmudul.hasan.smartai.features.teacher.home.data.TeacherHomeRepositoryImpl
+import app.dev.mahmudul.hasan.smartai.features.teacher.home.domain.TeacherHomeRepository
+import app.dev.mahmudul.hasan.smartai.features.teacher.home.ui.TeacherHomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,7 +31,7 @@ import org.koin.dsl.module
 val AppModule = module {
     single(createdAtStart = true) { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
-    single  { SignInUseCase(get())}
+    single { SignInUseCase(get()) }
     single { FirebaseDatabase.getInstance() }
     single<SignInRepository> { SignInRepositoryImpl(get(), get()) }
     viewModel {
@@ -38,22 +41,25 @@ val AppModule = module {
     viewModel {
         SignUpViewModel(get())
     }
-    single<StudentHomeRepository> { StudentHomeRepositoryImpl(get(),get()) }
+    single<StudentHomeRepository> { StudentHomeRepositoryImpl(get(), get()) }
     viewModel {
         StudentHomeViewModel(get(), get())
     }
 
-    single <StudentProfileRepository>{ StudentProfileRepositoryImpl(get(),get()) }
+    single<StudentProfileRepository> { StudentProfileRepositoryImpl(get(), get()) }
     viewModel {
-        StudentProfileViewModel(get(),get(),get())
+        StudentProfileViewModel(get(), get(), get())
     }
-    single<CourseHomeRepository> { CourseHomeRepositoryImpl(get(),get(),get()) }
+    single<CourseHomeRepository> { CourseHomeRepositoryImpl(get(), get(), get()) }
     viewModel {
         CourseHomeViewModel(get())
     }
-    single <AddTeacherRepository>{ AddTeacherRepositoryImpl(get(),get()) }
-    viewModel{
+    single<AddTeacherRepository> { AddTeacherRepositoryImpl(get(), get()) }
+    viewModel {
         AddTeacherViewModel(get())
     }
-
+    single<TeacherHomeRepository> { TeacherHomeRepositoryImpl(get(), get()) }
+    viewModel {
+        TeacherHomeViewModel(get())
+    }
 }

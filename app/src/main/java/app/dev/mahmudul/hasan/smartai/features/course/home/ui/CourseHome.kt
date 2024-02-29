@@ -51,26 +51,38 @@ import org.koin.compose.koinInject
 @Destination
 fun CourseHome(
     vm: CourseHomeViewModel = koinViewModel(),
-    courseID: String
+    courseID: String,
+    role: String
 ) {
     val courseDataState by vm.courseDataState.collectAsState()
     val messageListState by vm.messageListState.collectAsState()
     val storeMessageState by vm.storeMessageState.collectAsState()
-    vm.setCourseCode(courseID)
+
+
     val firebaseAuth = koinInject<FirebaseAuth>()
     val defaultOptions = JitsiMeetConferenceOptions.Builder()
         .setFeatureFlag("welcomepage.enabled", false)
         .build()
-    JitsiMeet.setDefaultConferenceOptions(defaultOptions)
+
     val options = JitsiMeetConferenceOptions.Builder()
         .setRoom("DPI_VIRTUAL_CLASS_${courseDataState.data}_DEVELOPER_MAHMUDUL_HASAN")
         .setSubject(courseDataState.data.courseName)
         .build()
 
-
-        LaunchedEffect(key1 = storeMessageState.data) {
-            vm.getMessages()
+    LaunchedEffect(courseID) {
+        if (role == "Teacher") {
+            vm.getTeacherCourseData(courseID)
+        } else {
+            vm.getStudentCourseData(courseID)
         }
+    }
+
+
+
+    LaunchedEffect(key1 = courseDataState.data) {
+        vm.getMessages(courseDataState.data)
+
+    }
 
 
     println(messageListState.data)
@@ -79,6 +91,7 @@ fun CourseHome(
         title = { Text("") },
         actions = {
             IconButton(onClick = {
+                JitsiMeet.setDefaultConferenceOptions(defaultOptions)
                 JitsiMeetActivity.launch(context, options)
 
             }) {
@@ -103,11 +116,9 @@ fun CourseHome(
     ) {
 
 
-            MessageList(messageListState.data, firebaseAuth.currentUser!!.uid)
-
-
+        MessageList(messageListState.data, firebaseAuth.currentUser!!.uid)
         SpacerHeight(height = 20)
-        SendMessageRow(courseId = courseID, vm)
+        SendMessageRow(courseId = courseID, vm,role)
     }
 
 
@@ -136,10 +147,11 @@ fun MessageList(items: List<MessageItemModel>, uid: String) {
 fun SendMessageRow(
     courseId: String,
     vm: CourseHomeViewModel,
+    role: String
 ) {
 
     val storeMessageState by vm.storeMessageState.collectAsState()
-
+    val courseDataState by vm.courseDataState.collectAsState()
     val message = remember {
         mutableStateOf("")
     }
@@ -179,7 +191,11 @@ fun SendMessageRow(
 
             )
         IconButton(onClick = {
-            vm.StoreMessage(message.value, courseId)
+            if (role == "Teacher") {
+                vm.StoreTeacherMessage(message.value, courseModel = courseDataState.data)
+            } else {
+                vm.StoreStudentMessage(message.value, courseModel = courseDataState.data)
+            }
         }, Modifier.size(width = 100.dp, height = 50.dp)) {
             Icon(
                 Icons.Sharp.ArrowForward,

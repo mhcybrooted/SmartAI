@@ -1,5 +1,6 @@
-package app.dev.mahmudul.hasan.smartai.features.student.home.ui
+package app.dev.mahmudul.hasan.smartai.features.teacher.home.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,18 +11,19 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,121 +32,76 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.dev.dpi_sai.component.SpacerHeight
 import app.dev.mahmudul.hasan.smartai.R
-import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
-import app.dev.mahmudul.hasan.smartai.component.ResultShowLoading
 import app.dev.mahmudul.hasan.smartai.features.destinations.CourseDetailsDestination
-import app.dev.mahmudul.hasan.smartai.features.destinations.SignInScreenDestination
-import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
-import app.dev.mahmudul.hasan.smartai.features.destinations.StudentProfileDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.CourseHomeDestination
 import app.dev.smartacademicinfrastructure.CourseModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable
+@SuppressLint("CoroutineCreationDuringComposition")
 @Destination
-fun StudentHomeScreen(
+@Composable
+fun TeacherHomeScreen(
     destination: DestinationsNavigator,
-    vm: StudentHomeViewModel = koinViewModel()
+    vm: TeacherHomeViewModel = koinViewModel()
 ) {
-    val studentProfileState by vm.studentProfileState.collectAsState()
-    val studentCoursesState by vm.studentCoursesState.collectAsState()
-    val currentUserId = studentProfileState.data.studentID ?: ""
-    val currentUserName = studentProfileState.data.name ?: ""
-
+    val teacherHomeState by vm.teacherHomeState.collectAsStateWithLifecycle()
+    println(teacherHomeState)
     Surface {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+        Scaffold(floatingActionButton = {
+            AddCourseFloatingActionButton(destination)
+        }
         ) {
-            SpacerHeight(height = 20)
-            TopAppBar(title = { }, actions = {
-                IconButton(onClick = {
-                    vm.studentSignOut()
-                    destination.navigate(SignInScreenDestination) {
-                        popUpTo(StudentHomeScreenDestination) {
-                            inclusive = true
-                        }
+            it
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                TopAppBar(title = { }, actions = {
+                    IconButton(onClick = {
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.logout),
+                            contentDescription = "logout",
+                        )
                     }
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.logout),
-                        contentDescription = "logout",
-                    )
-                }
-                IconButton(onClick = {
-                    destination.navigate(StudentProfileDestination) {
-                        popUpTo(StudentHomeScreenDestination) {
-                            inclusive = true
-                        }
-                    }
-                }) {
-                    Icon(
-                        Icons.Filled.Person,
-                        contentDescription = "Profile",
-                    )
-                }
-            })
-            ResultShowInfo(
-                visible = studentCoursesState.error.isNotEmpty(),
-                data = "Error : ${studentCoursesState.error}"
-            )
-            if (studentProfileState.isLoading || studentCoursesState.isLoading) {
-                ResultShowLoading()
+                })
+                TeacherCourseList(
+                    items = teacherHomeState.data,
+                    destination = destination,
+                    role = "teacher"
+                )
+
             }
-            if (studentCoursesState.data != null) {
-                ItemList(studentCoursesState.data, destination,currentUserId,currentUserName)
-            }
+
+
         }
     }
-
-
-
-    if (studentProfileState.data != null) {
-        vm.getStudentCourses(studentProfileState.data)
-    }
-    if (studentProfileState.error.isNotEmpty()) {
-        destination.navigate(SignInScreenDestination) {
-            popUpTo(StudentHomeScreenDestination) {
-                inclusive = true
-            }
-        }
-    }
-
 }
 
 @Composable
-fun ItemList(
-    items: List<CourseModel>,
-    destination: DestinationsNavigator,
-    uid: String,
-    currentUserName: String
-) {
+fun TeacherCourseList(items: List<CourseModel>, destination: DestinationsNavigator, role: String) {
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         items(items) { item ->
-            ItemRow(item, destination, uid,currentUserName)
+            TeacherCourseRow(item, destination)
         }
     }
 }
 
+
 @Composable
-fun ItemRow(
-    item: CourseModel,
-    destination: DestinationsNavigator,
-    uid: String,
-    currentUserName: String
-) {
+fun TeacherCourseRow(item: CourseModel, destination: DestinationsNavigator,) {
 
     Card(
         modifier = Modifier
@@ -201,20 +158,7 @@ fun ItemRow(
             SpacerHeight(height = 20)
             OutlinedButton(
                 onClick = {
-                    destination.navigate(
-                        CourseDetailsDestination(
-                            item.courseCode,
-                            item.courseName,
-                            uid,
-                            item.courseSession,
-                            item.courseDepartment,
-                            item.courseShift,
-                            item.courseSemester,
-                            item.courseGroup,
-                            "Student",
-                            currentUserName
-                        )
-                    )
+                    destination.navigate(CourseDetailsDestination(item.courseCode, item.courseName,item.courseTeacherID,item.courseSession,item.courseDepartment,item.courseShift,item.courseSemester,item.courseGroup,"Teacher",item.courseTeacherName))
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.8F),
@@ -233,3 +177,15 @@ fun ItemRow(
     SpacerHeight(height = 20)
 
 }
+
+
+@Composable
+fun AddCourseFloatingActionButton(destination: DestinationsNavigator) {
+    FloatingActionButton(onClick = {
+//        destination.navigate(AddCourseDestination)
+    }) {
+        Icon(Icons.Default.Add, contentDescription = "Add Course")
+    }
+}
+
+

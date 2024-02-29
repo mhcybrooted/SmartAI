@@ -1,16 +1,13 @@
 package app.dev.mahmudul.hasan.smartai.features.signin.ui
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -23,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,6 +32,7 @@ import app.dev.mahmudul.hasan.smartai.features.destinations.AdminLoginScreenDest
 import app.dev.mahmudul.hasan.smartai.features.destinations.SignInScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.SignUpScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.TeacherHomeScreenDestination
 import com.google.firebase.auth.FirebaseAuth
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -97,6 +96,7 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
             Text(
                 text = "Login",
                 fontSize = 20.sp,
+                color = Color.Black,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(0.4F)
@@ -142,16 +142,21 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
         }
 
     }
-    when(checkRoleState.data){
+    when (checkRoleState.data) {
         "Student" -> {
-            destination.navigate(StudentHomeScreenDestination){
-                popUpTo(SignInScreenDestination){
+            destination.navigate(StudentHomeScreenDestination) {
+                popUpTo(SignInScreenDestination) {
                     inclusive = true
                 }
             }
         }
+
         "Teacher" -> {
-            println("Teacher")
+            destination.navigate(TeacherHomeScreenDestination) {
+                popUpTo(SignInScreenDestination) {
+                    inclusive = true
+                }
+            }
         }
     }
 }

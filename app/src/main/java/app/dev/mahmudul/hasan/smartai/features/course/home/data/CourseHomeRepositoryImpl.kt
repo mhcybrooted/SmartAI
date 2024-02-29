@@ -9,9 +9,7 @@ import app.dev.smartacademicinfrastructure.StudentDataModel
 import com.appdevmhr.dpi_sai.di.Resourse
 import com.appdevmhr.dpi_sai.di.getDataAsync
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,7 +24,7 @@ class CourseHomeRepositoryImpl(
 
     ) : CourseHomeRepository, BaseRepository() {
 
-    override suspend fun getCourseData(courseID: String): Flow<Resourse<CourseModel>> =
+    override suspend fun getStudentCourseData(courseID: String): Flow<Resourse<CourseModel>> =
         safeApiCall {
             val currentUser = firebaseAuth.currentUser!!.uid
             val studentData =
@@ -39,17 +37,19 @@ class CourseHomeRepositoryImpl(
             Resourse.Success(result.toObject(CourseModel::class.java)!!)
         }
 
-    override suspend fun getMessages(courseID: String): Flow<Resourse<List<MessageItemModel>>> =
+    override suspend fun getTeacherCourseData(courseID: String): Flow<Resourse<CourseModel>> =
         safeApiCall {
             val currentUser = firebaseAuth.currentUser!!.uid
-            val studentData =
-                firestore.collection("StudentList").document(currentUser).get().await()
-                    .toObject(StudentDataModel::class.java)!!
+            val result = firestore.collection("TeachersList").document(currentUser)
+                .collection("Courses").document(courseID).get().await()
+            Resourse.Success(result.toObject(CourseModel::class.java)!!)
+        }
 
-           val reference =  firebaseDatabase.getReference("Courses").child(studentData.department)
-                .child(studentData.session).child(studentData.semester).child(studentData.shift)
-                .child(studentData.group).child(courseID)
-
+    override suspend fun getMessages(courseModel: CourseModel): Flow<Resourse<List<MessageItemModel>>> =
+        safeApiCall {
+            val reference = firebaseDatabase.getReference("Courses").child(courseModel.courseDepartment)
+                .child(courseModel.courseSession).child(courseModel.courseSemester).child(courseModel.courseShift)
+                .child(courseModel.courseGroup).child(courseModel.courseCode)
             val snapshot = reference.getDataAsync()
             val messageList = mutableListOf<MessageItemModel>()
             for (data in snapshot.children) {
@@ -61,26 +61,54 @@ class CourseHomeRepositoryImpl(
         }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override suspend fun StoreMessage(
-        message: String, courseCode: String
-    ): Flow<Resourse<Boolean>> = safeApiCall {
-
-        if (message.isEmpty()) return@safeApiCall Resourse.Failure(Exception("Message is Empty"))
+    override suspend fun StoreStudentMessage(
+        message: String, courseModel: CourseModel
+    ): Flow<Resourse<Boolean>> = flow {
+try{
+        if (message.isEmpty()) return@flow
         val currentUser = firebaseAuth.currentUser!!.uid
         val studentData = firestore.collection("StudentList").document(currentUser).get().await()
             .toObject(StudentDataModel::class.java)!!
         val currentDateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a")
         val formattedDateTime = currentDateTime.format(formatter)
-        val reference = firebaseDatabase.getReference("Courses").child(studentData.department)
-            .child(studentData.session).child(studentData.semester).child(studentData.shift)
-            .child(studentData.group).child(courseCode).child(
+        val reference = firebaseDatabase.getReference("Courses").child(courseModel.courseDepartment)
+            .child(courseModel.courseSession).child(courseModel.courseSemester).child(courseModel.courseShift)
+            .child(courseModel.courseGroup).child(courseModel.courseCode).child(
                 formattedDateTime
             )
         val messageItemModel = MessageItemModel(
             message = message,
             uid = currentUser,
             senderName = studentData.name,
+            time = formattedDateTime
+        )
+        reference.setValue(messageItemModel).await()
+        Resourse.Success(true)
+        }catch (error:Exception){
+            Resourse.Failure(error)
+    println(error)
+        }
+    }
+ @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun StoreTeacherMessage(
+        message: String, courseModel: CourseModel
+    ): Flow<Resourse<Boolean>> = safeApiCall {
+
+//        if (message.isEmpty()) return@safeApiCall Resourse.Failure(Exception("Message is Empty"))
+        val currentUser = firebaseAuth.currentUser!!.uid
+        val currentDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a")
+        val formattedDateTime = currentDateTime.format(formatter)
+        val reference = firebaseDatabase.getReference("Courses").child(courseModel.courseDepartment)
+            .child(courseModel.courseSession).child(courseModel.courseSemester).child(courseModel.courseShift)
+            .child(courseModel.courseGroup).child(courseModel.courseCode).child(
+                formattedDateTime
+            )
+        val messageItemModel = MessageItemModel(
+            message = message,
+            uid = currentUser,
+            senderName = courseModel.courseTeacherName,
             time = formattedDateTime
         )
         reference.setValue(messageItemModel).await()
