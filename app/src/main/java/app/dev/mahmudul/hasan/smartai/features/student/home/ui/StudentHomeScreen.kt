@@ -38,6 +38,7 @@ import app.dev.mahmudul.hasan.smartai.features.destinations.CourseDetailsDestina
 import app.dev.mahmudul.hasan.smartai.features.destinations.SignInScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentProfileDestination
+import app.dev.mahmudul.hasan.smartai.utils.Utils.userRole
 import app.dev.smartacademicinfrastructure.CourseModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -211,7 +212,7 @@ fun ItemRow(
                             item.courseShift,
                             item.courseSemester,
                             item.courseGroup,
-                            "Student",
+                            userRole.last(),
                             currentUserName
                         )
                     )

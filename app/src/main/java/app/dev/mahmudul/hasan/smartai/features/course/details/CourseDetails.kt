@@ -2,6 +2,7 @@ package app.dev.mahmudul.hasan.smartai.features.course.details
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,23 +41,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.SpacerHeight
 import app.dev.mahmudul.hasan.smartai.component.ChatItemRow
+import app.dev.mahmudul.hasan.smartai.features.course.CourseTeacherHome
 import app.dev.mahmudul.hasan.smartai.features.course.home.data.MessageItemModel
+import app.dev.mahmudul.hasan.smartai.features.destinations.CourseDetailsDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.CourseTeacherHomeDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.SettingsStudentDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.SettingsTeacherDestination
+import app.dev.mahmudul.hasan.smartai.ui.theme.SmartAITheme
 import app.dev.mahmudul.hasan.smartai.utils.Utils.userRole
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import org.jitsi.meet.sdk.JitsiMeet
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
-import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -74,7 +82,7 @@ fun CourseDetails(
     semester: String,
     group: String,
     role: String,
-    userName:String
+    userName: String
 ) {
 
     val message = remember {
@@ -83,21 +91,23 @@ fun CourseDetails(
 
 
     val db = FirebaseDatabase.getInstance()
+    val currentUser = Firebase.auth.currentUser?.uid
     val referenc = db.getReference("Courses").child(department).child(session)
         .child(semester).child(shift).child(group).child(courseId)
     val courseInfo: MutableState<List<MessageItemModel>> = remember { mutableStateOf(emptyList()) }
-    val context = LocalContext.current
-    val defaultOptions = JitsiMeetConferenceOptions.Builder()
-        .setFeatureFlag("welcomepage.enabled", false)
-        .build()
-    JitsiMeet.setDefaultConferenceOptions(defaultOptions)
-    val options = JitsiMeetConferenceOptions.Builder()
-        .setRoom("roomName")// Settings for audio and video
-        .setUserInfo(JitsiMeetUserInfo())
+    val context = LocalContext.current.applicationContext
 
+    val options = JitsiMeetConferenceOptions.Builder()
+        .setRoom("DPI_VIRTUAL_CLASS_$courseId$courseName$teacherId$session$department$shift$semester$group _DEVELOPER_MAHMUDUL_HASAN")
+        .setFeatureFlag("welcomepage.enabled", false)
+        .setSubject(courseName)
         .build()
 
     val coroutineScope = rememberCoroutineScope()
+
+
+
+
 
 
     getCourseData(referenc, courseInfo)
@@ -107,29 +117,24 @@ fun CourseDetails(
             title = { Text(courseName) },
             actions = {
                 IconButton(onClick = {
-                    if (userRole.first() == role) {
-                        JitsiMeetActivity.launch(context, options)
-                    } else {
-                        JitsiMeetActivity.launch(context, options)
-
-                    }
+                    JitsiMeetActivity.launch(context, options)
                 }) {
                     Icon(Icons.Default.PlayArrow, contentDescription = "meeting")
                 }
                 IconButton(onClick = {
-//                    if (userRole.first() == role) {
-//                        destination.navigate(TeacherSettingsDestination(teacherId, courseId, courseName, session, department, shift, semester, group)){
-//                            popUpTo(CourseDetailsDestination){
-//                                inclusive = true
-//                            }
-//                        }
-//                    } else {
-//                        destination.navigate(StudentSettingsDestination(courseId, courseName, teacherId, session, department, shift, semester, group)){
-//                            popUpTo(CourseDetailsDestination){
-//                                inclusive = true
-//                            }
-//                        }
-//                    }
+                    if (userRole.first() == role) {
+                        destination.navigate(SettingsTeacherDestination(courseId)){
+                            popUpTo(CourseDetailsDestination){
+                                inclusive = true
+                            }
+                        }
+                    } else {
+                        destination.navigate(SettingsStudentDestination(courseId)){
+                            popUpTo(CourseDetailsDestination){
+                                inclusive = true
+                            }
+                        }
+                    }
                 }) {
                     Icon(Icons.Default.Settings, contentDescription = "meeting")
                 }
@@ -223,66 +228,69 @@ fun sendMessageRow(
     role: String,
     userName: String
 ) {
-    SpacerHeight(height = 10)
-    Row(
-        modifier = Modifier
-            .fillMaxHeight(0.25F)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-
-    ) {
-        Spacer(modifier = Modifier.width(20.dp))
-        OutlinedTextField(
+    SmartAITheme {
+        SpacerHeight(height = 10)
+        Row(
             modifier = Modifier
-                .fillMaxWidth(0.8F)
-                .fillMaxHeight(),
-            value = message.value,
-            onValueChange = {
-                message.value = it
-            },
-            textStyle = TextStyle(
-                fontSize = 20.sp
-            ),
+                .fillMaxHeight(0.25F)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
 
-            label = { Text(text = "Enter Your Message") },
-            leadingIcon = {
-                Icon(
-                    Icons.Default.MailOutline,
-                    contentDescription = "Favorite",
-                )
-            },
-            singleLine = false,
+        ) {
+            Spacer(modifier = Modifier.width(20.dp))
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth(0.8F)
+                    .fillMaxHeight(),
+                value = message.value,
+                onValueChange = {
+                    message.value = it
+                },
+                textStyle = TextStyle(
+                    fontSize = 20.sp
+                ),
 
-            )
-        IconButton(onClick = {
-
-            coroutineScope.launch {
-                if (message.value.isNotEmpty()) {
-                    storeMessage(
-                        message,
-                        courseId,
-                        teacherId,
-                        department,
-                        semester,
-                        session,
-                        shift,
-                        group,
-                        db,
-                        role,
-                        userName
-
+                label = { Text(text = "Enter Your Message") },
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.MailOutline,
+                        contentDescription = "Favorite",
                     )
+                },
+                singleLine = false,
+
+                )
+            IconButton(onClick = {
+
+                coroutineScope.launch {
+                    if (message.value.isNotEmpty()) {
+                        storeMessage(
+                            message,
+                            courseId,
+                            teacherId,
+                            department,
+                            semester,
+                            session,
+                            shift,
+                            group,
+                            db,
+                            role,
+                            userName
+
+                        )
+                    }
                 }
+            }, Modifier.size(width = 100.dp, height = 50.dp)) {
+                Icon(
+                    Icons.Sharp.ArrowForward,
+                    contentDescription = "send",
+                    modifier = Modifier.size(width = 100.dp, height = 50.dp),
+                )
             }
-        }, Modifier.size(width = 100.dp, height = 50.dp)) {
-            Icon(
-                Icons.Sharp.ArrowForward,
-                contentDescription = "send",
-                modifier = Modifier.size(width = 100.dp, height = 50.dp),
-            )
         }
     }
+
 
 }
 
@@ -306,14 +314,14 @@ suspend fun storeMessage(
     val formattedDateTime = currentDateTime.format(formatter)
 
 
-
     val reference =
         firebaseDatabase.getReference("Courses").child(department).child(session).child(semester)
             .child(shift).child(group).child(courseCode).child(
                 formattedDateTime
             )
 
-    val messageItem = MessageItemModel(message.value, "${uid}", "${formattedDateTime}", "${userName}")
+    val messageItem =
+        MessageItemModel(message.value, "${uid}", "${formattedDateTime}", "${userName}")
     if (userName.isNotEmpty()) {
         reference.setValue(messageItem).addOnSuccessListener {
             message.value = ""

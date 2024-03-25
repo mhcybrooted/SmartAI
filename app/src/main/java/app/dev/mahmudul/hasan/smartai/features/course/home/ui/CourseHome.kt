@@ -40,9 +40,6 @@ import app.dev.mahmudul.hasan.smartai.component.ResultShowLoading
 import app.dev.mahmudul.hasan.smartai.features.course.home.data.MessageItemModel
 import com.google.firebase.auth.FirebaseAuth
 import com.ramcosta.composedestinations.annotation.Destination
-import org.jitsi.meet.sdk.JitsiMeet
-import org.jitsi.meet.sdk.JitsiMeetActivity
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -60,14 +57,14 @@ fun CourseHome(
 
 
     val firebaseAuth = koinInject<FirebaseAuth>()
-    val defaultOptions = JitsiMeetConferenceOptions.Builder()
-        .setFeatureFlag("welcomepage.enabled", false)
-        .build()
-
-    val options = JitsiMeetConferenceOptions.Builder()
-        .setRoom("DPI_VIRTUAL_CLASS_${courseDataState.data}_DEVELOPER_MAHMUDUL_HASAN")
-        .setSubject(courseDataState.data.courseName)
-        .build()
+//    val defaultOptions = JitsiMeetConferenceOptions.Builder()
+//        .setFeatureFlag("welcomepage.enabled", false)
+//        .build()
+//
+//    val options = JitsiMeetConferenceOptions.Builder()
+//        .setRoom("DPI_VIRTUAL_CLASS_${courseDataState.data}_DEVELOPER_MAHMUDUL_HASAN")
+//        .setSubject(courseDataState.data.courseName)
+//        .build()
 
     LaunchedEffect(courseID) {
         if (role == "Teacher") {
@@ -91,8 +88,8 @@ fun CourseHome(
         title = { Text("") },
         actions = {
             IconButton(onClick = {
-                JitsiMeet.setDefaultConferenceOptions(defaultOptions)
-                JitsiMeetActivity.launch(context, options)
+//                JitsiMeet.setDefaultConferenceOptions(defaultOptions)
+//                JitsiMeetActivity.launch(context, options)
 
             }) {
                 Icon(Icons.Default.PlayArrow, contentDescription = "meeting")

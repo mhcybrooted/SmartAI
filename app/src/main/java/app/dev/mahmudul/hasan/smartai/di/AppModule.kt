@@ -3,6 +3,9 @@ package app.dev.mahmudul.hasan.smartai.di
 import app.dev.mahmudul.hasan.smartai.features.admin.addTeacher.data.AddTeacherRepositoryImpl
 import app.dev.mahmudul.hasan.smartai.features.admin.addTeacher.domain.AddTeacherRepository
 import app.dev.mahmudul.hasan.smartai.features.admin.login.ui.AddTeacherViewModel
+import app.dev.mahmudul.hasan.smartai.features.course.attendance.data.AttendanceRepositoryImpl
+import app.dev.mahmudul.hasan.smartai.features.course.attendance.domain.AttendanceRepository
+import app.dev.mahmudul.hasan.smartai.features.course.attendance.ui.AttendanceViewModel
 import app.dev.mahmudul.hasan.smartai.features.course.home.data.CourseHomeRepositoryImpl
 import app.dev.mahmudul.hasan.smartai.features.course.home.domain.CourseHomeRepository
 import app.dev.mahmudul.hasan.smartai.features.course.home.ui.CourseHomeViewModel
@@ -60,6 +63,12 @@ val AppModule = module {
     }
     single<TeacherHomeRepository> { TeacherHomeRepositoryImpl(get(), get()) }
     viewModel {
-        TeacherHomeViewModel(get())
+        TeacherHomeViewModel(get(),get  ())
     }
+    single<AttendanceRepository> { AttendanceRepositoryImpl(get()) }
+    viewModel {
+        AttendanceViewModel(get())
+    }
+
+
 }

@@ -7,12 +7,18 @@ import app.dev.smartacademicinfrastructure.CourseModel
 import com.appdevmhr.dpi_sai.di.doOnFailure
 import com.appdevmhr.dpi_sai.di.doOnLoading
 import com.appdevmhr.dpi_sai.di.doOnSuccess
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class TeacherHomeViewModel(private val repository: TeacherHomeRepository) : ViewModel() {
+class TeacherHomeViewModel(
+    private val repository: TeacherHomeRepository,
+    private val auth: FirebaseAuth
+) : ViewModel() {
     private val _teacherHomeState = MutableStateFlow(TeacherHomeState())
     val teacherHomeState = _teacherHomeState
+    private val _firebaseAuth = auth
+    val firebaseAuth = _firebaseAuth
 
     init {
         getTeacherCourses()

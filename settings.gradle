@@ -7,6 +7,7 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
+        google()
         mavenCentral()
         gradlePluginPortal()
         maven {
@@ -16,6 +17,12 @@ pluginManagement {
             url "https://maven.google.com"
         }
         maven { url 'https://jitpack.io' }
+        jcenter() {
+            content {
+                includeModule("com.yqritc", "android-scalablevideoview")
+            }
+        }
+
 
     }
 }
@@ -31,6 +38,12 @@ dependencyResolutionManagement {
             url "https://maven.google.com"
         }
         maven { url 'https://jitpack.io' }
+        jcenter() {
+            content {
+                includeModule("com.yqritc", "android-scalablevideoview")
+            }
+        }
+       
 
     }
 }

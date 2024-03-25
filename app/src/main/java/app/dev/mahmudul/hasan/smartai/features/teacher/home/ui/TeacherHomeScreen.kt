@@ -35,11 +35,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.dev.dpi_sai.component.SpacerHeight
 import app.dev.mahmudul.hasan.smartai.R
+import app.dev.mahmudul.hasan.smartai.features.destinations.AddCourseDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.CourseDetailsDestination
-import app.dev.mahmudul.hasan.smartai.features.destinations.CourseHomeDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.SignInScreenDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
+import app.dev.mahmudul.hasan.smartai.features.destinations.TeacherHomeScreenDestination
+import app.dev.mahmudul.hasan.smartai.utils.Utils
 import app.dev.smartacademicinfrastructure.CourseModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
 
@@ -52,6 +57,7 @@ fun TeacherHomeScreen(
     vm: TeacherHomeViewModel = koinViewModel()
 ) {
     val teacherHomeState by vm.teacherHomeState.collectAsStateWithLifecycle()
+    val auth = vm.firebaseAuth
     println(teacherHomeState)
     Surface {
         Scaffold(floatingActionButton = {
@@ -66,6 +72,12 @@ fun TeacherHomeScreen(
             ) {
                 TopAppBar(title = { }, actions = {
                     IconButton(onClick = {
+                        auth.signOut()
+                        destination.navigate(SignInScreenDestination) {
+                            popUpTo(TeacherHomeScreenDestination) {
+                                inclusive = true
+                            }
+                        }
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.logout),
@@ -101,7 +113,7 @@ fun TeacherCourseList(items: List<CourseModel>, destination: DestinationsNavigat
 
 
 @Composable
-fun TeacherCourseRow(item: CourseModel, destination: DestinationsNavigator,) {
+fun TeacherCourseRow(item: CourseModel, destination: DestinationsNavigator) {
 
     Card(
         modifier = Modifier
@@ -158,7 +170,20 @@ fun TeacherCourseRow(item: CourseModel, destination: DestinationsNavigator,) {
             SpacerHeight(height = 20)
             OutlinedButton(
                 onClick = {
-                    destination.navigate(CourseDetailsDestination(item.courseCode, item.courseName,item.courseTeacherID,item.courseSession,item.courseDepartment,item.courseShift,item.courseSemester,item.courseGroup,"Teacher",item.courseTeacherName))
+                    destination.navigate(
+                        CourseDetailsDestination(
+                            item.courseCode,
+                            item.courseName,
+                            item.courseTeacherID,
+                            item.courseSession,
+                            item.courseDepartment,
+                            item.courseShift,
+                            item.courseSemester,
+                            item.courseGroup,
+                            Utils.userRole.first(),
+                            item.courseTeacherName
+                        )
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.8F),
@@ -182,7 +207,7 @@ fun TeacherCourseRow(item: CourseModel, destination: DestinationsNavigator,) {
 @Composable
 fun AddCourseFloatingActionButton(destination: DestinationsNavigator) {
     FloatingActionButton(onClick = {
-//        destination.navigate(AddCourseDestination)
+        destination.navigate(AddCourseDestination)
     }) {
         Icon(Icons.Default.Add, contentDescription = "Add Course")
     }
