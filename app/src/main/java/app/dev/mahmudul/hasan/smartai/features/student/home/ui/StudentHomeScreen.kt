@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.SpacerHeight
 import app.dev.mahmudul.hasan.smartai.R
+import app.dev.mahmudul.hasan.smartai.component.LottieAnim
 import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
 import app.dev.mahmudul.hasan.smartai.component.ResultShowLoading
 import app.dev.mahmudul.hasan.smartai.features.destinations.CourseDetailsDestination
@@ -97,7 +98,8 @@ fun StudentHomeScreen(
                 data = "Error : ${studentCoursesState.error}"
             )
             if (studentProfileState.isLoading || studentCoursesState.isLoading) {
-                ResultShowLoading()
+                LottieAnim(anim = R.raw.loading, )
+
             }
             if (studentCoursesState.data != null) {
                 ItemList(studentCoursesState.data, destination,currentUserId,currentUserName)

@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.DropDownSpiner
 import app.dev.dpi_sai.component.InputField
 import app.dev.dpi_sai.component.SpacerHeight
+import app.dev.mahmudul.hasan.smartai.R
+import app.dev.mahmudul.hasan.smartai.component.LottieAnim
 import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
 import app.dev.mahmudul.hasan.smartai.features.destinations.SignUpScreenDestination
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
@@ -159,7 +161,8 @@ fun SignUpScreen(destination: DestinationsNavigator, vm: SignUpViewModel = koinV
                 data = "Please fill all the fields"
             )
             if (signUpState.isLoading || saveStudentInfoState.isLoading) {
-                CircularProgressIndicator()
+                LottieAnim(anim = R.raw.loading, )
+
             }
             SpacerHeight(height = 120)
 

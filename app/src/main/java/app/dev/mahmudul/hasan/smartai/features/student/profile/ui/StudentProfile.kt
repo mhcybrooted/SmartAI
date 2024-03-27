@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.DropDownSpiner
 import app.dev.dpi_sai.component.InputField
 import app.dev.dpi_sai.component.SpacerHeight
+import app.dev.mahmudul.hasan.smartai.R
+import app.dev.mahmudul.hasan.smartai.component.LottieAnim
 import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
 import app.dev.mahmudul.hasan.smartai.features.destinations.StudentHomeScreenDestination
 import app.dev.mahmudul.hasan.smartai.utils.Utils
@@ -165,7 +167,7 @@ fun StudentProfile(
             )
 
             if (studentProfileState.isLoading || updateStudentProfile.isLoading) {
-                CircularProgressIndicator()
+                LottieAnim(anim = R.raw.loading, )
             }
             SpacerHeight(height = 120)
 

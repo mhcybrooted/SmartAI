@@ -79,6 +79,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
     implementation 'com.github.MahboubehSeyedpour:jetpack-loading:1.1.0'
+    implementation 'com.airbnb.android:lottie-compose:4.2.0'
     //noinspection UseTomlInstead
 //    implementation("io.getstream:stream-video-android-compose:0.4.2")
 

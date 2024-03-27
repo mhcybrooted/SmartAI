@@ -23,6 +23,8 @@ import androidx.navigation.NavHostController
 import app.dev.dpi_sai.component.DropDownSpiner
 import app.dev.dpi_sai.component.InputField
 import app.dev.dpi_sai.component.SpacerHeight
+import app.dev.mahmudul.hasan.smartai.R
+import app.dev.mahmudul.hasan.smartai.component.LottieAnim
 import app.dev.mahmudul.hasan.smartai.utils.Utils.departmentList
 import app.dev.mahmudul.hasan.smartai.utils.Utils.groupList
 import app.dev.mahmudul.hasan.smartai.utils.Utils.semesterList
@@ -192,7 +194,7 @@ fun AddCourse(destination: DestinationsNavigator,) {
             }
             SpacerHeight(height = 20)
             if (isLoading.value) {
-                CircularProgressIndicator()
+                LottieAnim(anim = R.raw.loading, )
                 SpacerHeight(height = 10)
                 Text(
                     text = "Please wait",

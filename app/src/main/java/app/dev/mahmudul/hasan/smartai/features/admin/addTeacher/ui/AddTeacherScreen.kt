@@ -20,6 +20,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.dev.dpi_sai.component.DropDownSpiner
 import app.dev.dpi_sai.component.InputField
 import app.dev.dpi_sai.component.SpacerHeight
+import app.dev.mahmudul.hasan.smartai.R
+import app.dev.mahmudul.hasan.smartai.component.LottieAnim
 import app.dev.mahmudul.hasan.smartai.component.ResultShowInfo
 import app.dev.mahmudul.hasan.smartai.features.admin.login.ui.AddTeacherViewModel
 import app.dev.mahmudul.hasan.smartai.utils.Utils.departmentList
@@ -127,7 +129,7 @@ fun AddTeacherScreen(
             ResultShowInfo(visible = isInfo.value, data = info.value)
             ResultShowInfo(visible = saveTeacherInfoState.data, data = "Teacher Added Successfully")
             if (addTeacherState.isLoading || saveTeacherInfoState.isLoading) {
-                CircularProgressIndicator()
+                LottieAnim(anim = R.raw.loading, )
             }
             SpacerHeight(height = 100)
         }

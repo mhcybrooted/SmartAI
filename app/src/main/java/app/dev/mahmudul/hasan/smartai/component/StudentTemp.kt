@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.SpacerHeight
+import app.dev.mahmudul.hasan.smartai.R
 import app.dev.mahmudul.hasan.smartai.features.course.attendance.data.AttendanceModel
 import app.dev.mahmudul.hasan.smartai.features.course.attendance.ui.AttendanceViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -65,7 +66,7 @@ fun StudentTemp(courseCode: String, vm: AttendanceViewModel= koinViewModel(), co
         )
         SpacerHeight(16)
         if (getAttendanceState.value.isLoading) {
-            CircularProgressIndicator()
+            LottieAnim(anim = R.raw.loading, )
         }
     }
 }
