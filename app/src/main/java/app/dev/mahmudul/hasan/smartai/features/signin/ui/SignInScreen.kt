@@ -44,6 +44,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
+import okhttp3.internal.wait
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -94,12 +95,13 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
                             text = "SIGN IN",
                             fontSize = 40.sp,
                             fontWeight = FontWeight.W900,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = Color.White,
                     )
-                    SpacerHeight(height = 20)
+                    SpacerHeight(height = 40)
                     LottieAnim(R.raw.sign)
 
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(50.dp))
                     InputField("Email", email) {
                         email = it
                     }
@@ -107,6 +109,7 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
                     InputField(name = "Password", value = password) {
                         password = it
                     }
+
                     SpacerHeight(height = 10)
                     if (signInState.isLoading || checkRoleState.isLoading) {
                         LottieAnim(anim = R.raw.loading)

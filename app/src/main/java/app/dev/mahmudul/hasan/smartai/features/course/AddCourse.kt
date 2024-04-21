@@ -14,7 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -92,7 +95,7 @@ fun AddCourse(destination: DestinationsNavigator,) {
     val context  = LocalContext.current.applicationContext
     LazyColumn(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.f), contentScale = ContentScale.FillBounds),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {

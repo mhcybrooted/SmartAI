@@ -27,6 +27,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -122,11 +124,13 @@ fun TeacherCourseRow(item: CourseModel, destination: DestinationsNavigator) {
 
     Card(
             modifier = Modifier
+
                     .fillMaxWidth(0.9F),
     ) {
         Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
+                        .paint(painterResource(id = R.drawable.a), contentScale = ContentScale.FillBounds)
                         .padding(horizontal = 18.dp)
                         .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally

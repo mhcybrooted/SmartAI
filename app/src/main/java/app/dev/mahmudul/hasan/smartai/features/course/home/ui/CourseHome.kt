@@ -30,11 +30,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.dev.dpi_sai.component.SpacerHeight
+import app.dev.mahmudul.hasan.smartai.R
 import app.dev.mahmudul.hasan.smartai.component.ChatItemRow
 import app.dev.mahmudul.hasan.smartai.component.ResultShowLoading
 import app.dev.mahmudul.hasan.smartai.features.course.home.data.MessageItemModel
@@ -107,7 +111,7 @@ fun CourseHome(
         ResultShowLoading()
     }
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.k), contentScale = ContentScale.FillBounds),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

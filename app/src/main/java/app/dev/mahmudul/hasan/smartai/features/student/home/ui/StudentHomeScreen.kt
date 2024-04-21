@@ -25,6 +25,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -151,13 +154,14 @@ fun ItemRow(
 
     Card(
         modifier = Modifier
-            .fillMaxWidth(0.9F),
+                .fillMaxWidth(0.9F)
+               ,
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
-                .padding(horizontal = 18.dp)
-                .fillMaxSize(),
+                    .padding(horizontal = 18.dp)
+                    .fillMaxSize() .paint(painterResource(id = R.drawable.button_pro_max), contentScale = ContentScale.FillBounds),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -167,6 +171,7 @@ fun ItemRow(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 20.sp,
+                    color = Color.White,
                 fontWeight = FontWeight.W900
             )
             SpacerHeight(height = 20)
@@ -175,6 +180,7 @@ fun ItemRow(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 18.sp,
+                    color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             SpacerHeight(height = 10)
@@ -183,6 +189,7 @@ fun ItemRow(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 18.sp,
+                    color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             SpacerHeight(height = 10)
@@ -191,6 +198,7 @@ fun ItemRow(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 18.sp,
+                    color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             SpacerHeight(height = 10)
@@ -199,6 +207,7 @@ fun ItemRow(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 18.sp,
+                    color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             SpacerHeight(height = 20)
@@ -225,6 +234,7 @@ fun ItemRow(
                 Text(
                     text = "Let's Go To  ${item.courseName.toUpperCase()} ",
                     fontSize = 20.sp,
+                        color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.width(30.dp))
