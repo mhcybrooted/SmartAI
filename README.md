@@ -150,3 +150,13 @@ tool for academic institutions seeking to thrive in the digital age. We are
 confident that this initiative will make a positive impact on the academic
 
 community and contribute to the advancement of education worldwide.
+
+## Output 
+
+# as a Student 
+https://github.com/mh-dpi/SmartAI/assets/107402929/39853585-6c98-4349-b349-a077bcf7e7be
+
+# as a Teacher 
+https://github.com/mh-dpi/SmartAI/assets/107402929/f3727108-db93-4940-8df8-ea8ae7208426
+
+#### Thank you 
