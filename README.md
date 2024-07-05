@@ -1,8 +1,8 @@
-###PROJECT PROPOSAL
+### PROJECT PROPOSAL
 
-##Project Name : Smart Academic Infrastructure Android App
+## Project Name : Smart Academic Infrastructure Android App
 
-##Project Objective : 
+## Project Objective : 
 
 The primary objective of the Smart Academic Infrastructure project is to
 
@@ -16,25 +16,29 @@ convenient access to essential resources for students, faculty, and
 
 administrators.
 
-##Project Summary:
+## Project Summary:
 
 The Smart Academic Infrastructure app encompasses several key
 
 features to facilitate a smoother academic experience:
 
-Attendance Management: Utilizing location services and Firebase
+## Attendance Management: 
+Utilizing location services and Firebase
 
 integration, the app enables automated attendance tracking for students
 
 and faculty members, ensuring accuracy and efficiency in record-keeping.
 
-##Job Submission: Students can conveniently submit assignments,
+## Job Submission:
+Students can conveniently submit assignments,
 
 projects, and other coursework materials through the app, which are
 
 seamlessly integrated with Firebase for secure storage and access.
 
-Class Tests and Continuous Assessment: The app provides a platform for
+Class Tests and Continuous 
+## Assessment: 
+The app provides a platform for
 
 conducting class tests and quizzes, with real-time grading and feedback
 
@@ -42,25 +46,30 @@ functionalities, fostering continuous assessment and learning
 
 improvement.
 
-##Classroom Quizzes (CQ): Integrated with Firebase, the app facilitates
+## Classroom Quizzes (CQ): 
+
+Integrated with Firebase, the app facilitates
 
 interactive classroom quizzes, enhancing student engagement and
 
 knowledge retention through gamified learning experiences.
 
-##Assignment Management: Students can view, submit, and track
+## Assignment Management:
+Students can view, submit, and track
 
 assignments through the app, with notifications and reminders to ensure
 
 timely completion and submission.
 
-##Virtual Classes: Conduct virtual classes and lectures through the app,
+## Virtual Classes:
+Conduct virtual classes and lectures through the app,
 
 leveraging Kotlin for smooth and efficient delivery of educational content,
 
 promoting remote learning flexibility.
 
-Messaging System: Facilitate communication among students, faculty,
+## Messaging System: 
+Facilitate communication among students, faculty,
 
 and administrators through a robust messaging system powered by
 
@@ -68,15 +77,17 @@ Firebase Realtime Database, enabling instant communication and
 
 collaboration.
 
-##Problem & Solution:
+## Problem & Solution:
 
-#Problem: Traditional academic processes often involve manual and time-
+# Problem: 
+Traditional academic processes often involve manual and time-
 
 consuming tasks, leading to inefficiencies, errors in record-keeping, and
 
 communication gaps between stakeholders.
 
-#Solution: The Smart Academic Infrastructure app addresses these
+# Solution: 
+The Smart Academic Infrastructure app addresses these
 
 challenges by automating various academic processes, such as
 
@@ -90,8 +101,11 @@ managing academic tasks and fostering collaboration within the
 
 academic community.
 
-##Resource Requirement: Java,Kotlin,Xml,Firebase etc
-##Project Background : The Smart Academic Infrastructure application
+## Resource Requirement: 
+Java,Kotlin,Xml,Firebase,MVVM etc
+
+## Project Background :
+The Smart Academic Infrastructure application
 
 addresses these challenges by providing a centralized platform for all
 
@@ -107,7 +121,7 @@ and messaging features facilitates seamless communication and
 
 collaboration in both physical and virtual learning environments.
 
-##Conclusion:
+## Conclusion:
 
 Furthermore, the Smart Academic Infrastructure app not only addresses
 
