@@ -89,7 +89,7 @@ fun SignUpScreen(destination: DestinationsNavigator, vm: SignUpViewModel = koinV
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.paint(painterResource(id = R.drawable.i), contentScale = ContentScale.FillBounds).fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         item {
             SpacerHeight(height = 50)
@@ -164,7 +164,8 @@ fun SignUpScreen(destination: DestinationsNavigator, vm: SignUpViewModel = koinV
                 data = "Please fill all the fields"
             )
             if (signUpState.isLoading || saveStudentInfoState.isLoading) {
-                LottieAnim(anim = R.raw.loading, )
+//                LottieAnim(anim = R.raw.loading, )
+                Text("Loading")
 
             }
             SpacerHeight(height = 120)

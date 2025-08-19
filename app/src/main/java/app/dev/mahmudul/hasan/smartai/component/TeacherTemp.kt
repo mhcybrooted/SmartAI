@@ -78,7 +78,6 @@ fun TeacherTemp(courseCode: String, vm: AttendanceViewModel = koinViewModel(), c
                         .fillMaxHeight(0.8f)
                 ) {
                     Column(
-                        modifier = Modifier .paint(painterResource(id = R.drawable.o), contentScale = ContentScale.Fit).padding(innerPadding),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -121,7 +120,8 @@ fun TeacherTemp(courseCode: String, vm: AttendanceViewModel = koinViewModel(), c
                         SpacerHeight(16)
 
                         if (putAttendanceState.value.isLoading) {
-                            LottieAnim(anim = R.raw.loading, )
+//                            LottieAnim(anim = R.raw.loading, )
+                            Text("Loading")
                         }
                         if (putAttendanceState.value.data) {
                             openDialog.value = false
@@ -135,8 +135,7 @@ fun TeacherTemp(courseCode: String, vm: AttendanceViewModel = koinViewModel(), c
 
             Column(
                 modifier = Modifier
-                        .paint(painterResource(id = R.drawable.p), contentScale = ContentScale.Fit)
-                    .padding(innerPadding)
+                        .padding(innerPadding)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -155,8 +154,8 @@ fun TeacherTemp(courseCode: String, vm: AttendanceViewModel = koinViewModel(), c
                 )
                 SpacerHeight(16)
                 if (getAttendanceState.value.isLoading) {
-                    LottieAnim(anim = R.raw.loading, )
-
+//                    LottieAnim(anim = R.raw.loading, )
+                    Text("Loading")
                 }
             }
         }

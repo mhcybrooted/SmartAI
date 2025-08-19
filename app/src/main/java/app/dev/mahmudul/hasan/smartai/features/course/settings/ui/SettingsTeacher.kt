@@ -32,7 +32,7 @@ import com.ramcosta.composedestinations.navigation.popUpTo
 fun SettingsTeacher(modifier: Modifier = Modifier,destination: DestinationsNavigator,courseCode: String) {
     Column(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.i), contentScale = ContentScale.FillBounds),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(

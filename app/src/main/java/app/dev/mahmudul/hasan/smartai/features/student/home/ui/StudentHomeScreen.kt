@@ -101,7 +101,8 @@ fun StudentHomeScreen(
                 data = "Error : ${studentCoursesState.error}"
             )
             if (studentProfileState.isLoading || studentCoursesState.isLoading) {
-                LottieAnim(anim = R.raw.loading, )
+//                LottieAnim(anim = R.raw.loading, )
+                Text("Loading")
 
             }
             if (studentCoursesState.data != null) {
@@ -161,7 +162,7 @@ fun ItemRow(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                     .padding(horizontal = 18.dp)
-                    .fillMaxSize() .paint(painterResource(id = R.drawable.button_pro_max), contentScale = ContentScale.FillBounds),
+                    .fillMaxSize() ,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 

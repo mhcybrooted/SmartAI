@@ -11,8 +11,9 @@ import com.ramcosta.composedestinations.annotation.Destination
 @Composable
 fun AssignmentTeacherScreen(modifier: Modifier = Modifier,courseCode: String,) {
     TeacherTemp(courseCode =courseCode,  collection ="AssignmentSheet" , subCollection = "Assignment")
-
 }
+
+
 @Destination
 @Composable
 fun AssignmentStudentScreen(modifier: Modifier = Modifier,courseCode: String,) {

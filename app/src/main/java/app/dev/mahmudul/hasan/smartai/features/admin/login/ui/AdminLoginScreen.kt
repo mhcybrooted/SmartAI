@@ -39,7 +39,7 @@ fun AdminLoginScreen(destination: DestinationsNavigator) {
     }
     Column(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.m), contentScale = ContentScale.FillBounds),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(

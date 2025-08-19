@@ -82,7 +82,7 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
 
         item {
             Box(modifier = Modifier
-                    .fillMaxSize()  .paint(painterResource(id = R.drawable.login), contentScale = ContentScale.FillBounds)
+                    .fillMaxSize()
                   ) {
                 Column(
                         verticalArrangement = Arrangement.Center,
@@ -99,7 +99,8 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
                             color = Color.White,
                     )
                     SpacerHeight(height = 40)
-                    LottieAnim(R.raw.sign)
+//                    LottieAnim(R.raw.sign)
+                    Text("Please Wait ....")
 
                     Spacer(modifier = Modifier.height(50.dp))
                     InputField("Email", email) {
@@ -112,7 +113,8 @@ fun SignInScreen(destination: DestinationsNavigator, vm: SignInViewModel = koinV
 
                     SpacerHeight(height = 10)
                     if (signInState.isLoading || checkRoleState.isLoading) {
-                        LottieAnim(anim = R.raw.loading)
+//                        LottieAnim(anim = R.raw.loading)
+                        Text("Loading")
                     } else {
                         OutlinedButton(onClick = {
                             isLoading = true

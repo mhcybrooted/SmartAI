@@ -95,7 +95,7 @@ fun AddCourse(destination: DestinationsNavigator,) {
     val context  = LocalContext.current.applicationContext
     LazyColumn(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.f), contentScale = ContentScale.FillBounds),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
@@ -197,7 +197,8 @@ fun AddCourse(destination: DestinationsNavigator,) {
             }
             SpacerHeight(height = 20)
             if (isLoading.value) {
-                LottieAnim(anim = R.raw.loading, )
+//                LottieAnim(anim = R.raw.loading, )
+                Text("Loading")
                 SpacerHeight(height = 10)
                 Text(
                     text = "Please wait",

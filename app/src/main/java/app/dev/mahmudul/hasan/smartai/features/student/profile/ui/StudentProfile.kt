@@ -102,7 +102,7 @@ fun StudentProfile(
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.b), contentScale = ContentScale.FillBounds)
+        modifier = Modifier.fillMaxSize()
     ) {
         item {
             SpacerHeight(height = 50)
@@ -170,7 +170,8 @@ fun StudentProfile(
             )
 
             if (studentProfileState.isLoading || updateStudentProfile.isLoading) {
-                LottieAnim(anim = R.raw.loading, )
+
+                Text("Loading")
             }
             SpacerHeight(height = 120)
 

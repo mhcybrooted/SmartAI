@@ -9,9 +9,10 @@ import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination
 @Composable
-fun ClassTestTeacherScreen(modifier: Modifier = Modifier, courseCode: String,) {
-    TeacherTemp(courseCode =courseCode,  collection ="ClassTestSheet" , subCollection = "ClassTest")
 
+fun ClassTestTeacherScreen(modifier: Modifier = Modifier, courseCode: String,) {
+
+    TeacherTemp(courseCode =courseCode,  collection ="ClassTestSheet" , subCollection = "ClassTest")
 }
 @Destination
 @Composable

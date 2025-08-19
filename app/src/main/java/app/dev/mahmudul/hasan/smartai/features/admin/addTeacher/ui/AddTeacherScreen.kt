@@ -72,7 +72,7 @@ fun AddTeacherScreen(
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.n), contentScale = ContentScale.FillBounds)
+        modifier = Modifier.fillMaxSize()
     ) {
         item {
             SpacerHeight(height = 100)
@@ -132,7 +132,8 @@ fun AddTeacherScreen(
             ResultShowInfo(visible = isInfo.value, data = info.value)
             ResultShowInfo(visible = saveTeacherInfoState.data, data = "Teacher Added Successfully")
             if (addTeacherState.isLoading || saveTeacherInfoState.isLoading) {
-                LottieAnim(anim = R.raw.loading, )
+//                LottieAnim(anim = R.raw.loading, )
+                Text("Loading")
             }
             SpacerHeight(height = 100)
         }

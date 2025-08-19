@@ -10,7 +10,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 @Composable
 fun NoticeTeacherScreen(modifier: Modifier = Modifier, courseCode: String,) {
     TeacherTemp(courseCode =courseCode,  collection ="NoticeSheet" , subCollection = "Notice")
-
 }
 @Destination
 @Composable

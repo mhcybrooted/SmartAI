@@ -88,7 +88,8 @@ fun TeacherHomeScreen(
                     }
                 })
                 if (teacherHomeState.isLoading) {
-                    LottieAnim(anim = R.raw.loading)
+
+                    Text("Loading")
                 } else {
                     TeacherCourseList(
                             items = teacherHomeState.data,
@@ -130,8 +131,7 @@ fun TeacherCourseRow(item: CourseModel, destination: DestinationsNavigator) {
         Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                        .paint(painterResource(id = R.drawable.a), contentScale = ContentScale.FillBounds)
-                        .padding(horizontal = 18.dp)
+                          .padding(horizontal = 18.dp)
                         .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
         ) {

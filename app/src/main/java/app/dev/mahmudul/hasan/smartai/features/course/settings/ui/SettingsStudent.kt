@@ -31,7 +31,7 @@ import com.ramcosta.composedestinations.navigation.popUpTo
 fun SettingsStudent(modifier: Modifier = Modifier,destination: DestinationsNavigator,couseCode: String) {
     Column(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.j), contentScale = ContentScale.FillBounds),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(

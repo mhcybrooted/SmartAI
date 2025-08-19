@@ -111,7 +111,7 @@ fun CourseHome(
         ResultShowLoading()
     }
     Column(
-        modifier = Modifier.fillMaxSize().paint(painterResource(id = R.drawable.k), contentScale = ContentScale.FillBounds),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
